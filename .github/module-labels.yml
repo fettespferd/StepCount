@@ -1,0 +1,18 @@
+"M: app":
+  - pizzaCalc/lib/app/**/*
+"M: auth":
+  - pizzaCalc/lib/auth/**/*
+"M: content":
+  - pizzaCalc/lib/content/**/*
+"M: creation":
+  - pizzaCalc/lib/creation/**/*
+"M: explore":
+  - pizzaCalc/lib/explore/**/*
+"M: feed":
+  - pizzaCalc/lib/feed/**/*
+"M: messenger":
+  - pizzaCalc/lib/messenger/**/*
+"M: settings":
+  - pizzaCalc/lib/settings/**/*
+"P: app":
+  - pizzaCalc/**/*

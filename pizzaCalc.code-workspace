@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": "firebase"
+    },
+    {
+      "path": "pizzaCalc",
+      "name": "flutter"
+    },
+    {
+      "path": "."
+    }
+  ]
+}
