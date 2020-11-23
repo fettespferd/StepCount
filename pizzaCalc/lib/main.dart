@@ -15,7 +15,8 @@ Future<void> main() async {
   await services.allReady();
 
   final isSignedIn = services.auth.isSignedIn;
-  logger.i('User is signed in already: $isSignedIn.');
+
+  await _initFlutterLocalNotification();
   runApp(SmusyApp(isSignedInInitially: isSignedIn));
 }
 
@@ -26,3 +27,5 @@ void _showLoadingPage() {
     child: CircularProgressIndicator(),
   ));
 }
+
+Future<void> _initFlutterLocalNotification() async {}

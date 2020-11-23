@@ -21,12 +21,15 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_deep_linking: ^0.1.2
+  flutter_local_notifications: ^3.0.1+5
   flutter_localizations:
     sdk: flutter
   freezed_annotation: ^0.11.0+1
   get_it: ^4.0.4
+  health: ^2.0.9
   image: ^2.1.18
   infinite_scroll_pagination: ^1.1.1
+  loading_overlay: ^0.2.1
   logger: ^0.7.0+1
   logger_flutter: ^0.7.1
   meta: ^1.1.8
@@ -36,6 +39,7 @@ dependencies:
       ref: b1841ad
   outline_material_icons: ^0.1.1
   package_info: ">=0.4.1 <2.0.0"
+  percent_indicator: ^2.1.8
   streaming_shared_preferences: ^1.0.1
   path_provider: ^1.6.18
   test: ^1.15.0

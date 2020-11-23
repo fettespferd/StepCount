@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pizzaCalc/generated/l10n.dart';
 import 'package:pizzaCalc/settings/module.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'brand/theme.dart';
 import 'logger.dart';

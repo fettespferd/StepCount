@@ -9,47 +9,29 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator>
-    with StateWithCubit<PizzaCubit, PizzaState, Calculator> {
+    with StateWithCubit<StepCounter, StepCounterState, Calculator> {
   @override
-  PizzaCubit cubit = PizzaCubit();
+  StepCounter cubit = StepCounter();
 
-  double firstPizzaSize = 21;
-  double pricePerCmSquaredFirst;
-  double pricePerCmSquaredSecond;
-  double smallestSize = 16;
-  double largestSize = 32;
-  bool firstPizzaEntered = false;
-  bool secondPizzaEntered = false;
-  int currentPriceEuro = 0;
-  int currentPriceCent = 0;
+  int targetSteps = 4000;
+  int selectedTargetSteps = 4000;
+  int currentSteps = 1000;
+  int currentCalories = 0;
+  bool isLoading = false;
   ScrollPhysics physics = FixedExtentScrollPhysics();
 
   @override
-  void onCubitData(PizzaState state) {
+  void onCubitData(StepCounterState state) {
     state.maybeWhen(
-        isSliding: (val) {
-          firstPizzaSize = val;
+        newTarget: (int newTargetSteps) {
+          targetSteps = newTargetSteps;
         },
-        successFirst: (pricePerArea) {
-          pricePerCmSquaredFirst = pricePerArea;
-          firstPizzaEntered = true;
+        isLoading: () {
+          isLoading = true;
         },
-        successSecond: (secondCheaper) {
-          context.showBlurryDialog(
-              title: 'Entscheidung',
-              content: secondCheaper
-                  ? 'Kaufe lieber die zweite Pizza'
-                  : 'Kaufe lieber die erste Pizza',
-              buttonMessage: 'Okay',
-              onButtonPressed: () {
-                context.rootNavigator.pop();
-                cubit.reset();
-              });
-        },
-        reset: () {
-          firstPizzaEntered = false;
-          currentPriceEuro = 0;
-          currentPriceCent = 0;
+        resynched: (int totalSteps) {
+          isLoading = false;
+          currentSteps = totalSteps;
         },
         orElse: () {});
   }
@@ -59,57 +41,31 @@ class _CalculatorState extends State<Calculator>
         context: context,
         builder: (context) {
           return Container(
-              height: 230,
+              height: 280,
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.all(15),
                     child: Text(
-                      'Preis',
+                      'Tagesziel',
                       style: context.textTheme.headline4,
                     ),
                   ),
-                  Row(mainAxisSize: MainAxisSize.min, children: [
-                    Container(
-                      width: context.mediaQuery.size.width / 10,
-                      height: 80,
-                      child: ListWheelScrollView(
-                        clipBehavior: Clip.hardEdge,
-                        physics: physics,
-                        onSelectedItemChanged: (i) {
-                          currentPriceEuro = i;
-                        },
-                        diameterRatio: 1,
-                        overAndUnderCenterOpacity: 0.4,
-                        itemExtent: 20,
-                        magnification: 1.8,
-                        children: priceList(),
-                      ),
+                  Container(
+                    width: context.mediaQuery.size.width / 2,
+                    height: 100,
+                    child: ListWheelScrollView(
+                      clipBehavior: Clip.hardEdge,
+                      physics: physics,
+                      onSelectedItemChanged: (i) {
+                        selectedTargetSteps = i * 500 + 3000;
+                      },
+                      diameterRatio: 1,
+                      overAndUnderCenterOpacity: 0.4,
+                      itemExtent: 18,
+                      children: _targetStepList(),
                     ),
-                    Text(
-                      ',',
-                      style: context.textTheme.headline5,
-                    ),
-                    Container(
-                      width: context.mediaQuery.size.width / 14,
-                      height: 80,
-                      child: ListWheelScrollView(
-                        diameterRatio: 1,
-                        physics: physics,
-                        onSelectedItemChanged: (i) {
-                          currentPriceCent = i;
-                        },
-                        overAndUnderCenterOpacity: 0.4,
-                        itemExtent: 20,
-                        magnification: 1.8,
-                        children: centList(),
-                      ),
-                    ),
-                    Text(
-                      ' €',
-                      style: context.textTheme.headline5,
-                    ),
-                  ]),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: RaisedButton(
@@ -118,14 +74,8 @@ class _CalculatorState extends State<Calculator>
                         style: context.textTheme.headline5,
                       ),
                       onPressed: () {
-                        firstPizzaEntered
-                            ? cubit.calculateResult(
-                                currentPriceEuro,
-                                currentPriceCent,
-                                firstPizzaSize,
-                                pricePerCmSquaredFirst)
-                            : cubit.calculatePrice(currentPriceEuro,
-                                currentPriceCent, firstPizzaSize);
+                        cubit.setTargetSteps(selectedTargetSteps);
+
                         context.navigator.pop();
                       },
                     ),
@@ -135,18 +85,9 @@ class _CalculatorState extends State<Calculator>
         });
   }
 
-  List<Widget> priceList() {
+  List<Widget> _targetStepList() {
     final widgetList = <Widget>[];
-    final list = Iterable<int>.generate(50).toList();
-    list.asMap().forEach((key, value) {
-      widgetList.add(Text('$value'));
-    });
-    return widgetList;
-  }
-
-  List<Widget> centList() {
-    final widgetList = <Widget>[];
-    final list = Iterable<int>.generate(10).toList();
+    final list = [for (var i = 3000; i <= 30000; i += 500) i];
     list.asMap().forEach((key, value) {
       widgetList.add(Text('$value'));
     });
@@ -155,16 +96,20 @@ class _CalculatorState extends State<Calculator>
 
   Widget _stepProgress() {
     return Text(
-      'Schritte',
-      style: context.textTheme.headline4,
+      '$currentSteps / $targetSteps Schritte',
+      style: context.textTheme.bodyText2,
     );
   }
 
   Widget _calories() {
     return Text(
-      'Kalorien',
-      style: context.textTheme.headline4,
+      '$currentCalories Kalorien',
+      style: context.textTheme.bodyText2,
     );
+  }
+
+  int _completionPercentage(int currentSteps, int targetSteps) {
+    return (currentSteps / targetSteps * 100).toInt();
   }
 
   @override
@@ -176,27 +121,55 @@ class _CalculatorState extends State<Calculator>
           title: Text('Stepcounter'),
           backgroundColor: Colors.black12,
         ),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: LoadingOverlay(
+          isLoading: isLoading,
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _stepProgress(),
-                  _calories(),
-                ],
-              ),
-              Center(
-                child: RaisedButton(
-                  onPressed: _onButtonPressed,
-                  child: Text('Daily Goal'),
-                ),
-              ),
-            ]));
+                  CircularPercentIndicator(
+                    radius: width / 1.5,
+                    lineWidth: 15.0,
+                    percent: currentSteps / targetSteps,
+                    center: Text(
+                        '${_completionPercentage(currentSteps, targetSteps)}%'),
+                    progressColor: Colors.green,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _stepProgress(),
+                      _calories(),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Center(
+                      child: RaisedButton(
+                        onPressed: _onButtonPressed,
+                        child: Text('Daily Goal'),
+                      ),
+                    ),
+                  ),
+                  RaisedButton(
+                    child: Text('Refresh'),
+                    onPressed: cubit.syncData,
+                  ),
+                  LinearPercentIndicator(
+                    width: width / 1.2,
+                    lineHeight: 15,
+                    percent: currentSteps / targetSteps,
+                    backgroundColor: Colors.grey,
+                    progressColor: Colors.blue,
+                  ),
+                ]),
+          ),
+        ));
   }
 }
