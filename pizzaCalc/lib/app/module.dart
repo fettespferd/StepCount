@@ -16,6 +16,7 @@ export 'package:outline_material_icons/outline_material_icons.dart';
 export 'package:percent_indicator/percent_indicator.dart';
 export 'package:time_machine/time_machine.dart' show Instant, LocalDate, Period;
 export 'package:time_machine/time_machine_text_patterns.dart';
+export 'package:timezone/timezone.dart';
 
 export 'app.dart';
 export 'brand/colors.dart';

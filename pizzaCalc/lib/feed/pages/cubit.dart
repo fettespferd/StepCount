@@ -1,4 +1,5 @@
 import 'package:pizzaCalc/app/module.dart';
+import 'utils.dart';
 
 part 'cubit.freezed.dart';
 
@@ -9,7 +10,11 @@ class StepCounter extends Cubit<StepCounterState> {
     emit(StepCounterState.newTarget(selectedTargetSteps));
   }
 
-  Future<void> syncData() async {
+  Future<void> toggleNotification() {
+    emit(StepCounterState.toggleNotification());
+  }
+
+  Future<void> syncData(double weight, double height) async {
     emit(StepCounterState.isLoading());
     var _healthDataList = <HealthDataPoint>[];
     final now = DateTime.now();
@@ -19,9 +24,7 @@ class StepCounter extends Cubit<StepCounterState> {
     final health = HealthFactory();
 
     /// Define the types to get.
-    final types = <HealthDataType>[
-      HealthDataType.STEPS,
-    ];
+    final types = <HealthDataType>[HealthDataType.STEPS];
 
     /// Fetch new data
     final healthData =
@@ -36,7 +39,11 @@ class StepCounter extends Cubit<StepCounterState> {
         0,
         (previousValue, element) =>
             previousValue.toInt() + element.value.toInt());
-    emit(StepCounterState.resynched(totalSteps));
+
+    //Calc calories
+    final totalCalories = calcCalories(weight, height, totalSteps);
+
+    emit(StepCounterState.resynched(totalSteps, totalCalories));
   }
 }
 
@@ -44,8 +51,10 @@ class StepCounter extends Cubit<StepCounterState> {
 abstract class StepCounterState with _$StepCounterState {
   const factory StepCounterState.initial() = _InitialState;
   const factory StepCounterState.isLoading() = _LoadingState;
-  const factory StepCounterState.resynched(int totalSteps) = _ResynchedState;
+  const factory StepCounterState.resynched(int totalSteps, int totalCalories) =
+      _ResynchedState;
   const factory StepCounterState.newTarget(int selectedTargetSteps) =
       _NewTargetState;
+  const factory StepCounterState.toggleNotification() = _ToggeledState;
   const factory StepCounterState.reset() = _ResetState;
 }

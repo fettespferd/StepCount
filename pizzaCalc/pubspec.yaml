@@ -44,6 +44,7 @@ dependencies:
   path_provider: ^1.6.18
   test: ^1.15.0
   time_machine: ^0.9.13
+  timezone: ^0.5.9
   todo: ^1.0.2
   url_launcher: ^5.7.2
 

@@ -946,7 +946,7 @@ packages:
     source: hosted
     version: "0.9.15"
   timezone:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: timezone
       url: "https://pub.dartlang.org"
