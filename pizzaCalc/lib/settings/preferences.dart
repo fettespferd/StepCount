@@ -45,3 +45,50 @@ class _ThemeModeAdapter extends PreferenceAdapter<ThemeMode> {
     return preferences.setString(key, string);
   }
 }
+
+class UserPreferences {
+  static final UserPreferences _instance = UserPreferences._ctor();
+  factory UserPreferences() {
+    return _instance;
+  }
+
+  UserPreferences._ctor();
+
+  SharedPreferences _prefs;
+
+  void init() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  int get targetSteps {
+    return _prefs.getInt('TargetSteps') ?? 8000;
+  }
+
+  set targetSteps(int value) {
+    _prefs.setInt('TargetSteps', value);
+  }
+
+  double get userWeight {
+    return _prefs.getDouble('userWeight') ?? 70;
+  }
+
+  set userWeight(double value) {
+    _prefs.setDouble('userWeight', value);
+  }
+
+  int get userHeight {
+    return _prefs.getInt('userHeight') ?? 170;
+  }
+
+  set userHeight(int value) {
+    _prefs.setInt('userHeight', value);
+  }
+
+  bool get allowNotification {
+    return _prefs.getBool('allowNotification') ?? true;
+  }
+
+  set allowNotification(bool value) {
+    _prefs.setBool('allowNotification', value);
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pizzaCalc/app/module.dart';
 import 'package:pizzaCalc/feed/pages/cubit.dart';
+import 'package:pizzaCalc/settings/preferences.dart';
 import '../../auth/widgets/blurry_dialog.dart';
 import 'package:timezone/timezone.dart' as tz;
 import '../../main.dart';
@@ -13,31 +14,44 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator>
     with StateWithCubit<StepCounter, StepCounterState, Calculator> {
+  int targetSteps;
+  double userWeight; //in kg
+  int userHeight; //in cm
+  bool notificationsAllowed;
+
+  @override
+  void initState() {
+    targetSteps = UserPreferences().targetSteps;
+    userWeight = UserPreferences().userWeight;
+    userHeight = UserPreferences().userHeight;
+    notificationsAllowed = UserPreferences().allowNotification;
+
+    super.initState();
+  }
+
   @override
   StepCounter cubit = StepCounter();
 
   //Step Variables
-  int targetSteps = 1000;
+
   int selectedTargetSteps = 4000;
-  int currentSteps = 1000;
+  int currentSteps = 0;
   int currentCalories = 0;
   bool isLoading = false;
 
   //Size Variables
-  double userWeight = 73; //in kg
-  double userHeight = 178; //in cm
 
   int totalCalories = 0;
-
-  //Button
-  bool notificationsAllowed = true;
 
   ScrollPhysics physics = FixedExtentScrollPhysics();
 
   @override
   void onCubitData(StepCounterState state) {
     state.maybeWhen(
-        newTarget: (int newTargetSteps) {
+        initialized: (targetSteps) {
+          targetSteps = targetSteps;
+        },
+        newTarget: (int newTargetSteps) async {
           targetSteps = newTargetSteps;
         },
         isLoading: () {

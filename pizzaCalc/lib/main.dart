@@ -22,6 +22,8 @@ Future<void> main() async {
   final isSignedIn = services.auth.isSignedIn;
 
   await _initFlutterLocalNotification();
+
+  UserPreferences().init();
   runApp(SmusyApp(isSignedInInitially: isSignedIn));
 }
 

@@ -7,7 +7,7 @@ class BurnedCalorieCalculator {
 
 }
 
-int calcCalories(double weight, double height, int totalSteps) {
+int calcCalories(double weight, int height, int totalSteps) {
   final caloriesPerMile = 0.57 * weight * 2.2; //Conversion to pounds
   final strideLength = height * 0.415; //Assumption
   final stepCountperMile = 160934.4 / strideLength; //Mile in cm
@@ -55,7 +55,7 @@ Widget notificationButton(bool notificationsAllowed, StepCounter cubit) {
       ));
 }
 
-Widget refreshButton(StepCounter cubit, double userWeight, double userHeight) {
+Widget refreshButton(StepCounter cubit, double userWeight, int userHeight) {
   return IconButton(
     splashColor: Colors.green,
     iconSize: 30,
