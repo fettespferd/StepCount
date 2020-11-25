@@ -52,25 +52,25 @@ class AppTheme {
 
   static const textTheme = TextTheme(
     headline1: TextStyle(
-      fontFamily: 'FiraSans',
+      fontFamily: 'Lato',
       fontSize: 112,
       fontWeight: FontWeight.w300,
       letterSpacing: 0,
     ),
     headline2: TextStyle(
-      fontFamily: 'FiraSans',
+      fontFamily: 'Lato',
       fontSize: 56,
       fontWeight: FontWeight.normal,
       letterSpacing: 0,
     ),
     headline3: TextStyle(
-      fontFamily: 'FiraSans',
+      fontFamily: 'Lato',
       fontSize: 45,
       fontWeight: FontWeight.normal,
       letterSpacing: 0,
     ),
     headline4: TextStyle(
-      fontFamily: 'FiraSans',
+      fontFamily: 'Lato',
       fontSize: 34,
       fontWeight: FontWeight.normal,
       letterSpacing: 0,

@@ -14,22 +14,20 @@ class SettingsPage extends StatelessWidget {
         ),
         backgroundColor: Colors.black12,
       ),
-      body: GradientBackground(
-        child: ListView(
-          children: [
-            SingleSelectPreferenceTile<ThemeMode>(
-              preference: services.preferences.themeMode,
-              values: ThemeMode.values,
-              title: 'Design',
-              stringifier: (themeMode) => {
-                ThemeMode.system: 'Systemeinstellung',
-                ThemeMode.light: 'Hell',
-                ThemeMode.dark: 'Dunkel',
-              }[themeMode],
-              dialogTitle: 'Design auswählen',
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          SingleSelectPreferenceTile<ThemeMode>(
+            preference: services.preferences.themeMode,
+            values: ThemeMode.values,
+            title: 'Design',
+            stringifier: (themeMode) => {
+              ThemeMode.system: 'Systemeinstellung',
+              ThemeMode.light: 'Hell',
+              ThemeMode.dark: 'Dunkel',
+            }[themeMode],
+            dialogTitle: 'Design auswählen',
+          ),
+        ],
       ),
     );
   }

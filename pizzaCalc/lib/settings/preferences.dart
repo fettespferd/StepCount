@@ -47,15 +47,15 @@ class _ThemeModeAdapter extends PreferenceAdapter<ThemeMode> {
 }
 
 class UserPreferences {
-  static final UserPreferences _instance = UserPreferences._ctor();
   factory UserPreferences() {
     return _instance;
   }
-
   UserPreferences._ctor();
+  static final UserPreferences _instance = UserPreferences._ctor();
 
   SharedPreferences _prefs;
 
+  // ignore: avoid_void_async
   void init() async {
     _prefs = await SharedPreferences.getInstance();
   }

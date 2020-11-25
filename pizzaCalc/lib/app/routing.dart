@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide Route, Router;
 import 'package:flutter_deep_linking/flutter_deep_linking.dart';
-import 'package:logger_flutter/logger_flutter.dart';
 import 'package:pizzaCalc/auth/module.dart';
 import 'package:pizzaCalc/creation/module.dart';
 import 'package:pizzaCalc/feed/module.dart';

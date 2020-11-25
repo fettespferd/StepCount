@@ -40,18 +40,15 @@ Future<void> _initFlutterLocalNotification() async {
   tz.setLocalLocation(tz.getLocation('Europe/Berlin'));
 
 // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
-  const AndroidInitializationSettings initializationSettingsAndroid =
+  const initializationSettingsAndroid =
       AndroidInitializationSettings('app_icon');
   // final IOSInitializationSettings initializationSettingsIOS =
   //     IOSInitializationSettings(
   //         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-  final MacOSInitializationSettings initializationSettingsMacOS =
-      MacOSInitializationSettings();
-  final InitializationSettings initializationSettings = InitializationSettings(
+  final initializationSettingsMacOS = MacOSInitializationSettings();
+  final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       // iOS: initializationSettingsIOS,
       macOS: initializationSettingsMacOS);
-  final success =
-      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  //onSelectNotification: selectNotification);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 }

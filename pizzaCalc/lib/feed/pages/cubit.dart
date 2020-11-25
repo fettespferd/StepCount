@@ -7,29 +7,15 @@ part 'cubit.freezed.dart';
 class StepCounter extends Cubit<StepCounterState> {
   StepCounter() : super(StepCounterState.initial());
 
-  int targetSteps;
-  Future<void> _setInitialValues() async {
-    targetSteps = await _getStepsFromSharedPrefs();
-    emit(StepCounterState.initialized(targetSteps));
-  }
-
-  Future<int> _getStepsFromSharedPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    final targetSteps = prefs.getInt('targetSteps');
-    if (targetSteps == null) {
-      return 1000;
-    }
-    return targetSteps;
-  }
-
   Future<void> setTargetSteps(int selectedTargetSteps) async {
     UserPreferences().targetSteps = selectedTargetSteps;
     emit(StepCounterState.newTarget(selectedTargetSteps));
   }
 
-  Future<void> toggleNotification() {
+  Future<void> toggleNotification() async {
     emit(StepCounterState.toggleNotification());
     emit(StepCounterState.success());
+    return;
   }
 
   Future<void> syncData(double weight, int height) async {
@@ -53,7 +39,8 @@ class StepCounter extends Cubit<StepCounterState> {
 
     /// Filter out duplicates
     _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
-    int totalSteps = _healthDataList.fold(
+    // ignore: omit_local_variable_types
+    final int totalSteps = _healthDataList.fold(
         0,
         (previousValue, element) =>
             previousValue.toInt() + element.value.toInt());

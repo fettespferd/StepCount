@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pizzaCalc/app/module.dart';
 import 'package:pizzaCalc/feed/pages/cubit.dart';
 import 'package:pizzaCalc/settings/preferences.dart';
-import '../../auth/widgets/blurry_dialog.dart';
 import 'package:timezone/timezone.dart' as tz;
 import '../../main.dart';
 import 'utils.dart';
+import 'widgets.dart';
 
 class Calculator extends StatefulWidget {
   @override
@@ -14,6 +14,7 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator>
     with StateWithCubit<StepCounter, StepCounterState, Calculator> {
+  // Initizialisation
   int targetSteps;
   double userWeight; //in kg
   int userHeight; //in cm
@@ -23,6 +24,7 @@ class _CalculatorState extends State<Calculator>
   int currentCalories;
   int totalCalories;
   bool isLoading = true;
+
   @override
   void initState() {
     targetSteps = UserPreferences().targetSteps;
@@ -36,17 +38,13 @@ class _CalculatorState extends State<Calculator>
   @override
   StepCounter cubit = StepCounter();
 
-  //Step Variables
-
-  ScrollPhysics physics = FixedExtentScrollPhysics();
-
   @override
   void onCubitData(StepCounterState state) {
     state.maybeWhen(
         initialized: (targetSteps) {
           targetSteps = targetSteps;
         },
-        newTarget: (int newTargetSteps) async {
+        newTarget: (final newTargetSteps) async {
           targetSteps = newTargetSteps;
         },
         isLoading: () {
@@ -61,81 +59,19 @@ class _CalculatorState extends State<Calculator>
           currentSteps = totalSteps;
           currentCalories = totalCalories;
           if (totalSteps < targetSteps) {
-            scheduleNotification(notificationsAllowed);
+            scheduleNotification(context);
           }
         },
-        success: () {
-          //For safety
-        },
+        success: () {},
         orElse: () {});
-  }
-
-  List<Widget> _targetStepList() {
-    final widgetList = <Widget>[];
-    final list = [for (var i = 3000; i <= 30000; i += 500) i];
-    list.asMap().forEach((key, value) {
-      widgetList.add(
-        Text(
-          '$value',
-          style: TextStyle(color: Colors.orange),
-        ),
-      );
-    });
-    return widgetList;
-  }
-
-  Widget counterWidget(String text, String image) {
-    return Column(
-      children: [
-        Image.asset(image),
-        SizedBox(height: 8),
-        Text(
-          text,
-          style: context.textTheme.bodyText2,
-        ),
-      ],
-    );
-  }
-
-  int _completionPercentage(int currentSteps, int targetSteps) {
-    final percentValue = (currentSteps / targetSteps * 100).toInt();
-    if (percentValue < 100) {
-      return percentValue;
-    } else {
-      return 100;
-    }
-  }
-
-  Future<void> scheduleNotification(bool notificationsAllowed) async {
-    final now = tz.TZDateTime.now(local);
-    final reminderTime = now;
-    //tz.TZDateTime.local(now.year, now.month, now.day, 22, 39);
-    if (notificationsAllowed) {
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-          0,
-          'Schritte nicht geschafft',
-          'Du musst noch laufen',
-          reminderTime.add(const Duration(seconds: 5)),
-          const NotificationDetails(
-              android: AndroidNotificationDetails('your channel id',
-                  'your channel name', 'your channel description')),
-          androidAllowWhileIdle: true,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime);
-    }
-  }
-
-  void toggleButton() {
-    cubit.toggleNotification();
   }
 
   @override
   Widget build(BuildContext context) {
     final width = context.mediaQuery.size.width;
-    final height = context.mediaQuery.size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Stepcounter'),
+        title: Text(context.s.stepCalc_stepCounter),
         backgroundColor: Colors.black12,
       ),
       body: LoadingOverlay(
@@ -150,18 +86,18 @@ class _CalculatorState extends State<Calculator>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   refreshButton(cubit, userWeight, userHeight),
-                  notificationButton(notificationsAllowed, cubit)
+                  notificationButton(cubit)
                 ],
               ),
               CircularPercentIndicator(
                 radius: width / 1.5,
                 lineWidth: 15,
-                percent: (_completionPercentage(currentSteps, targetSteps)
+                percent: (completionPercentage(currentSteps, targetSteps)
                         .toDouble()) /
                     100,
-                center: Text(
-                    '${_completionPercentage(currentSteps, targetSteps)}%'),
-                progressColor: Colors.green,
+                center:
+                    Text('${completionPercentage(currentSteps, targetSteps)}%'),
+                progressColor: context.theme.primaryColor,
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -170,19 +106,24 @@ class _CalculatorState extends State<Calculator>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  counterWidget('$currentSteps / $targetSteps \n    Schritte',
-                      'assets/images/steps.png'),
-                  counterWidget('    $currentCalories \nKalorien',
-                      'assets/images/flame.png'),
+                  counterWidget(
+                      '$currentSteps / $targetSteps \n    ${context.s.stepCalc_steps}',
+                      'assets/images/steps.png',
+                      context),
+                  counterWidget(
+                      '    $currentCalories \n${context.s.stepCalc_calories}',
+                      'assets/images/flame.png',
+                      context),
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8),
                 child: Center(
                   child: RaisedButton(
-                    color: Colors.orange,
+                    color: context.theme.primaryColor,
                     onPressed: () {
-                      _onButtonPressed(targetSteps);
+                      selectTargetSteps(
+                          targetSteps, context, cubit, selectedTargetSteps);
                     },
                     child: Wrap(
                       children: [
@@ -190,7 +131,7 @@ class _CalculatorState extends State<Calculator>
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Daily Goal'),
+                        Text(context.s.stepCalc_daily_goal),
                       ],
                     ),
                   ),
@@ -203,11 +144,10 @@ class _CalculatorState extends State<Calculator>
                   LinearPercentIndicator(
                     width: width / 1.2,
                     lineHeight: 15,
-                    percent: (_completionPercentage(currentSteps, targetSteps)
+                    percent: (completionPercentage(currentSteps, targetSteps)
                             .toDouble()) /
                         100,
-                    backgroundColor: Colors.grey,
-                    progressColor: Colors.blue,
+                    progressColor: context.theme.primaryColor,
                   ),
                 ],
               ),
@@ -218,56 +158,22 @@ class _CalculatorState extends State<Calculator>
     );
   }
 
-  Future<Widget> _onButtonPressed(int targetSteps) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-              height: 280,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Tagesziel',
-                      style: context.textTheme.headline4,
-                    ),
-                  ),
-                  Container(
-                    width: context.mediaQuery.size.width / 2,
-                    height: 100,
-                    child: ListWheelScrollView(
-                      controller: FixedExtentScrollController(
-                        initialItem: (targetSteps - 3000) ~/ 500,
-                      ),
-                      clipBehavior: Clip.hardEdge,
-                      physics: physics,
-                      onSelectedItemChanged: (i) {
-                        selectedTargetSteps = i * 500 + 3000;
-                      },
-                      diameterRatio: 1,
-                      magnification: 1.5,
-                      overAndUnderCenterOpacity: 0.4,
-                      itemExtent: 18,
-                      children: _targetStepList(),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: RaisedButton(
-                      child: Text(
-                        'Speichern',
-                        style: context.textTheme.headline5,
-                      ),
-                      onPressed: () {
-                        cubit.setTargetSteps(selectedTargetSteps);
-
-                        context.navigator.pop();
-                      },
-                    ),
-                  ),
-                ],
-              ));
-        });
+  Future<void> scheduleNotification(BuildContext context) async {
+    final now = tz.TZDateTime.now(local);
+    final reminderTime = now;
+    //tz.TZDateTime.local(now.year, now.month, now.day, 22, 39);
+    if (notificationsAllowed) {
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+          0,
+          context.s.stepCalc_goalmissed,
+          context.s.stepCalc_motivation,
+          reminderTime.add(const Duration(seconds: 5)),
+          const NotificationDetails(
+              android: AndroidNotificationDetails(
+                  'channel ID', 'stepCalc', 'Calc Steps per day')),
+          androidAllowWhileIdle: true,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime);
+    }
   }
 }

@@ -1,6 +1,4 @@
 {
-  "app_bottomNav_discover": "Discover",
-  "app_bottomNav_favorites": "Favorites",
   "app_bottomNav_profile": "Profile",
   "app_bottomNav_stream": "Steps",
   "app_error_pageNotFound_message": "404 – We couldn't find the page you were looking for:\n{uri}",
@@ -44,5 +42,21 @@
   "settings_legal_disclosure": "Legal disclosure",
   "settings_legal_licenses": "Licenses",
   "settings_legal_privacyPolicy": "Privacy policy",
-  "settings": "Settings"
+  "settings": "Settings",
+  "log_out": "Log Out",
+  "stepCalc_goalmissed": "Almost completed",
+  "stepCalc_motivation": "Have a walk to reach your goal",
+  "stepCalc_android_channelId": "Your channel",
+  "stepCalc_daily_goal": "Daily goal",
+  "stepCalc_steps": "Steps",
+  "stepCalc_calories":"Calories",
+  "stepCalc_stepCounter": "Stepcount",
+  "stepCalc_saveButton": "Save",
+  "profile_alert_title": "Success",
+  "profile_alert_content": "Data has been processed",
+  "profile_alert_button": "Continue",
+  "profile_title": "Your profile",
+  "profile_set_weight": "Set Weight",
+  "profile_set_height": "Set Height",
+  "profile_set_params": "Save values"
 }

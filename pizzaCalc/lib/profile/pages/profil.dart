@@ -31,17 +31,17 @@ class _ProfilPageState extends State<ProfilPage>
   @override
   void onCubitData(ProfilState state) {
     state.maybeWhen(
-        isSlidingWeight: (double val) {
+        isSlidingWeight: (val) {
           userWeight = val;
         },
-        isSlidingHeight: (int val) {
+        isSlidingHeight: (val) {
           userHeight = val;
         },
         success: () {
           context.showBlurryDialog(
-            title: 'Danke',
-            content: 'Die Daten wurden eingetragen',
-            buttonMessage: 'Okay',
+            title: context.s.profile_alert_title,
+            content: context.s.profile_alert_content,
+            buttonMessage: context.s.profile_alert_content,
             onButtonPressed: () {
               context.rootNavigator.pop();
             },
@@ -54,74 +54,72 @@ class _ProfilPageState extends State<ProfilPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dein Profil'),
-        backgroundColor: Colors.black12,
+        title: Text(context.s.profile_title),
+        backgroundColor: context.theme.bottomAppBarColor,
       ),
-      body: GradientBackground(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 64),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Gewicht bestimmen:',
-                          style: TextStyle(fontWeight: FontWeight.normal))),
-                ),
-                Center(
-                  child: Slider(
-                      label: '${userWeight.toStringAsFixed(1)} kg',
-                      value: userWeight,
-                      divisions: 50,
-                      min: minWeight,
-                      max: maxWeight,
-                      onChanged: (val) {
-                        cubit.moveSlider(val);
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Größe bestimmen:',
-                          style: TextStyle(fontWeight: FontWeight.normal))),
-                ),
-                Center(
-                  child: Slider(
-                      label: '$userHeight cm',
-                      value: userHeight.toDouble(),
-                      divisions: 50,
-                      min: minHeight.toDouble(),
-                      max: maxHeight.toDouble(),
-                      onChanged: (val) {
-                        cubit.moveHeightSlider(val.toInt());
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: RaisedButton(
-                    child: Text('Werte eintragen'),
-                    onPressed: () {
-                      cubit.setData(userWeight, userHeight);
-                    },
-                  ),
-                ),
-                ElevatedButton(
-                  child: Text('Einstellungen'),
-                  onPressed: () => context.rootNavigator.pushNamed('/settings'),
-                ),
-                ElevatedButton(
-                  child: Text('Ausloggen'),
-                  onPressed: () async {
-                    await services.firebaseAuth.signOut();
-                    await context.rootNavigator.pushReplacementNamed('/login');
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 64),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(context.s.profile_set_weight,
+                        style: TextStyle(fontWeight: FontWeight.normal))),
+              ),
+              Center(
+                child: Slider(
+                    label: '${userWeight.toStringAsFixed(1)} kg',
+                    value: userWeight,
+                    divisions: 50,
+                    min: minWeight,
+                    max: maxWeight,
+                    onChanged: (val) {
+                      cubit.moveSlider(val);
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(context.s.profile_set_height,
+                        style: TextStyle(fontWeight: FontWeight.normal))),
+              ),
+              Center(
+                child: Slider(
+                    label: '$userHeight cm',
+                    value: userHeight.toDouble(),
+                    divisions: 50,
+                    min: minHeight.toDouble(),
+                    max: maxHeight.toDouble(),
+                    onChanged: (val) {
+                      cubit.moveHeightSlider(val.toInt());
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: ElevatedButton(
+                  child: Text(context.s.profile_set_params),
+                  onPressed: () {
+                    cubit.setData(userWeight, userHeight);
                   },
                 ),
-              ],
-            ),
+              ),
+              ElevatedButton(
+                child: Text(context.s.settings),
+                onPressed: () => context.rootNavigator.pushNamed('/settings'),
+              ),
+              ElevatedButton(
+                child: Text(context.s.log_out),
+                onPressed: () async {
+                  await services.firebaseAuth.signOut();
+                  await context.rootNavigator.pushReplacementNamed('/login');
+                },
+              ),
+            ],
           ),
         ),
       ),

@@ -1,7 +1,5 @@
 import 'package:flutter_deep_linking/flutter_deep_linking.dart';
-import 'package:logger_flutter/logger_flutter.dart';
 import 'package:pizzaCalc/app/module.dart';
-
 import '../profile/pages/profil.dart';
 import 'pages/password_reset/page.dart';
 import 'pages/sign_in/page.dart';

@@ -6,64 +6,64 @@ class AppColors {
   static MaterialColor primary(Brightness brightness) =>
       brightness.isLight ? primaryLight : primaryDark;
   static const primaryLight = MaterialColor(0xFFD72E8B, {
-    50: Color(0xFFFF8A80),
-    100: Color(0xFFE06F67),
-    200: Color(0xFFC2554F),
-    300: Color(0xFFA43B38),
-    400: Color(0xFF872022),
-    500: Color(0xFF6A000D),
-    600: Color(0xFF4E0000),
-    700: Color(0xFF350002),
-    800: Color(0xFF020000),
+    50: Color(0xFFF7A56C),
+    100: Color(0xFFD98A53),
+    200: Color(0xFFBB713B),
+    300: Color(0xFF9E5823),
+    400: Color(0xFF814009),
+    500: Color(0xFF652900),
+    600: Color(0xFF491300),
+    700: Color(0xFF2F0000),
+    800: Color(0xFF040000),
     900: Color(0xFF000000),
   });
   static const primaryDark = MaterialColor(0xFF962061, {
-    50: Color(0xFFB71C1C),
-    100: Color(0xFF9E4B79),
-    200: Color(0xFF9B3D71),
-    300: Color(0xFF982E68),
-    400: Color(0xFF962061),
-    500: Color(0xFF871C57),
-    600: Color(0xFF78194D),
-    700: Color(0xFF691644),
-    800: Color(0xFF5A1339),
-    900: Color(0xFF4B1030),
+    50: Color(0xFFD9691A),
+    100: Color(0xFFBA4F00),
+    200: Color(0xFF9B3600),
+    300: Color(0xFF7C1C00),
+    400: Color(0xFF5E0000),
+    500: Color(0xFF420000),
+    600: Color(0xFF280001),
+    700: Color(0xFF000000),
+    800: Color(0xFF000000),
+    900: Color(0xFF000000),
   });
   static Color primaryVariant(Brightness brightness) =>
       brightness.isLight ? primaryVariantLight : primaryVariantDark;
-  static const primaryVariantLight = Color(0xFFFF8A80);
-  static const primaryVariantDark = Color(0xFFB71C1C);
+  static const primaryVariantLight = Color(0xFFF7A56C);
+  static const primaryVariantDark = Color(0xFF9E5823);
 
   static MaterialColor secondary(Brightness brightness) =>
       brightness.isLight ? secondaryLight : secondaryLight;
   static const secondaryLight = MaterialColor(0xFFA32B82, {
-    50: Color(0xFFFF2C1A),
-    100: Color(0xFFDD0000),
-    200: Color(0xFFBC0000),
-    300: Color(0xFF9B0000),
-    400: Color(0xFF7A0000),
-    500: Color(0xFF5B0003),
-    600: Color(0xFF3D0003),
+    50: Color(0xFFC48F6A),
+    100: Color(0xFFA87552),
+    200: Color(0xFF8C5D3A),
+    300: Color(0xFF714524),
+    400: Color(0xFF562E0E),
+    500: Color(0xFF3D1900),
+    600: Color(0xFF250100),
     700: Color(0xFF170000),
     800: Color(0xFF000000),
-    900: Color(0xFF521641),
+    900: Color(0xFF000000),
   });
   static const secondaryDark = MaterialColor(0xFF711E5A, {
-    50: Color(0xFF8B597D),
-    100: Color(0xFF844974),
-    200: Color(0xFF7E3B6C),
-    300: Color(0xFF782C63),
-    400: Color(0xFF711E5A),
-    500: Color(0xFF661B51),
-    600: Color(0xFF5A1748),
-    700: Color(0xFF4F143F),
-    800: Color(0xFF441236),
-    900: Color(0xFF390F2D),
+    50: Color(0xFFB09C8F),
+    100: Color(0xFF958275),
+    200: Color(0xFF7B695D),
+    300: Color(0xFF625145),
+    400: Color(0xFF4A3A2F),
+    500: Color(0xFF33241A),
+    600: Color(0xFF1F0F00),
+    700: Color(0xFF000000),
+    800: Color(0xFF000000),
+    900: Color(0xFF000000),
   });
   static Color secondaryVariant(Brightness brightness) =>
       brightness.isLight ? secondaryVariantLight : secondaryVariantLight;
-  static const secondaryVariantLight = Color(0xFF710055);
-  static const secondaryVariantDark = Color(0xFF4E003B);
+  static const secondaryVariantLight = Color(0xFFC48F6A);
+  static const secondaryVariantDark = Color(0xFFB09C8F);
 
   static Color surface(Brightness brightness) =>
       brightness.isLight ? surfaceLight : surfaceDark;
@@ -77,8 +77,8 @@ class AppColors {
 
   static Color error(Brightness brightness) =>
       brightness.isLight ? errorLight : errorDark;
-  static const errorLight = Color(0xFFB00020);
-  static const errorDark = Color(0xFFCF6679);
+  static const errorLight = Color(0xFF250100);
+  static const errorDark = Color(0xFF33241A);
 
   static ColorScheme primaryScheme(Brightness brightness) {
     return ColorScheme(
