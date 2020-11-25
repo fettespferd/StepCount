@@ -2,7 +2,7 @@
   "app_bottomNav_discover": "Entdecken",
   "app_bottomNav_favorites": "Favoriten",
   "app_bottomNav_profile": "Profil",
-  "app_bottomNav_stream": "Pizza",
+  "app_bottomNav_stream": "Schritte",
   "app_error_pageNotFound_message": "404 – Wir konnten die von dir aufgerufene Seite nicht finden:\n{uri}",
   "app_error_pageNotFound": "Seite nicht gefunden",
   "app_error_unknown": "Es ist ein interner Fehler aufgetreten:\n{error}",

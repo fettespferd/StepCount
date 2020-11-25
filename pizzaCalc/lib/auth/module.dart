@@ -18,20 +18,19 @@ final authRoutes = Route(
   routes: [
     Route(
       matcher: Matcher.path('login'),
-      materialBuilder: (_, result) => LogConsoleOnShake(child: SignInPage()),
+      materialBuilder: (_, result) => SignInPage(),
     ),
     Route(
       matcher: Matcher.path('passwordReset'),
-      materialBuilder: (_, result) =>
-          LogConsoleOnShake(child: PasswordResetPage()),
+      materialBuilder: (_, result) => PasswordResetPage(),
     ),
     Route(
       matcher: Matcher.path('signUp'),
-      materialBuilder: (_, result) => LogConsoleOnShake(child: SignUpPage()),
+      materialBuilder: (_, result) => SignUpPage(),
     ),
     Route(
       matcher: Matcher.path('profil'),
-      materialBuilder: (_, result) => LogConsoleOnShake(child: ProfilPage()),
+      materialBuilder: (_, result) => ProfilPage(),
     )
   ],
 );

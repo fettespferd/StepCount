@@ -72,7 +72,7 @@ class _BottomTab {
   // We don't use relative URLs as they would start with a '/' and hence the
   // navigator automatically populates our initial back stack with '/'.
   static final feed = _BottomTab(
-    icon: OMIcons.localPizza,
+    icon: OMIcons.directionsRun,
     title: (s) => s.app_bottomNav_stream,
     initialRoute: 'feed',
   );

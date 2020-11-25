@@ -69,7 +69,7 @@ class UserPreferences {
   }
 
   double get userWeight {
-    return _prefs.getDouble('userWeight') ?? 70;
+    return _prefs.getDouble('userWeight') ?? 140;
   }
 
   set userWeight(double value) {
@@ -77,7 +77,7 @@ class UserPreferences {
   }
 
   int get userHeight {
-    return _prefs.getInt('userHeight') ?? 170;
+    return _prefs.getInt('userHeight') ?? 210;
   }
 
   set userHeight(int value) {

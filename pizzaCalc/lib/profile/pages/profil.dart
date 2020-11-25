@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pizzaCalc/app/module.dart';
 import 'package:pizzaCalc/profile/pages/cubit.dart';
+import 'package:pizzaCalc/settings/preferences.dart';
 import '../../auth/widgets/blurry_dialog.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -10,12 +11,20 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage>
     with StateWithCubit<ProfilCubit, ProfilState, ProfilPage> {
-  double userWeight = 80;
-  int userHeight = 180;
+  double userWeight;
+  int userHeight;
   double minWeight = 45;
   double maxWeight = 150;
   int minHeight = 140;
   int maxHeight = 210;
+
+  @override
+  void initState() {
+    userWeight = UserPreferences().userWeight;
+    userHeight = UserPreferences().userHeight;
+    super.initState();
+  }
+
   @override
   ProfilCubit cubit = ProfilCubit();
 
@@ -101,15 +110,15 @@ class _ProfilPageState extends State<ProfilPage>
                   ),
                 ),
                 ElevatedButton(
+                  child: Text('Einstellungen'),
+                  onPressed: () => context.rootNavigator.pushNamed('/settings'),
+                ),
+                ElevatedButton(
                   child: Text('Ausloggen'),
                   onPressed: () async {
                     await services.firebaseAuth.signOut();
                     await context.rootNavigator.pushReplacementNamed('/login');
                   },
-                ),
-                ElevatedButton(
-                  child: Text('Einstellungen'),
-                  onPressed: () => context.rootNavigator.pushNamed('/settings'),
                 ),
               ],
             ),

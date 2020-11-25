@@ -22,7 +22,7 @@ final router = Router(
       routes: [
         Route(
           matcher: Matcher.path('main'),
-          materialBuilder: (_, result) => LogConsoleOnShake(child: MainPage()),
+          materialBuilder: (_, result) => MainPage(),
         ),
       ],
     ),
