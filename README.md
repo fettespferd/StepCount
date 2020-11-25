@@ -19,4 +19,4 @@ Get active! Get healthy!
 
 - with `flutter run` you can execute the app
 
-- if there are any problems don't hesitate to contact me: <faubel.julius@egmail.com>
+- if there are any problems don't hesitate to contact me: <faubel.julius@gmail.com>
