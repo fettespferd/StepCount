@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "debug",
-      "program": "pizzaCalc/lib/main.dart",
+      "program": "stepCalc/lib/main.dart",
       "request": "launch",
       "type": "dart"
     }

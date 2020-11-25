@@ -36,7 +36,7 @@ return Container(
 
 ### 1.3. `import`
 
-Imports of packages and other modules are absolute (`import 'package:flutter/material.dart'`, `import 'package:pizzaCalc/app/module.dart'`), whereas imports of files in the same module are relative (`import '../utils.dart'`).
+Imports of packages and other modules are absolute (`import 'package:flutter/material.dart'`, `import 'package:stepCalc/app/module.dart'`), whereas imports of files in the same module are relative (`import '../utils.dart'`).
 
 
 ## 2. Naming

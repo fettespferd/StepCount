@@ -1,18 +1,18 @@
 "M: app":
-  - pizzaCalc/lib/app/**/*
+  - stepCalc/lib/app/**/*
 "M: auth":
-  - pizzaCalc/lib/auth/**/*
+  - stepCalc/lib/auth/**/*
 "M: content":
-  - pizzaCalc/lib/content/**/*
+  - stepCalc/lib/content/**/*
 "M: creation":
-  - pizzaCalc/lib/creation/**/*
+  - stepCalc/lib/creation/**/*
 "M: explore":
-  - pizzaCalc/lib/explore/**/*
-"M: feed":
-  - pizzaCalc/lib/feed/**/*
+  - stepCalc/lib/explore/**/*
+"M: calc":
+  - stepCalc/lib/calc/**/*
 "M: messenger":
-  - pizzaCalc/lib/messenger/**/*
+  - stepCalc/lib/messenger/**/*
 "M: settings":
-  - pizzaCalc/lib/settings/**/*
+  - stepCalc/lib/settings/**/*
 "P: app":
-  - pizzaCalc/**/*
+  - stepCalc/**/*

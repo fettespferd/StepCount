@@ -1,11 +1,11 @@
 # Architecture
 
-The app consists of multiple so-called modules. Our main modules correspond to the direct subfolders of `pizzaCalc/lib/`.
+The app consists of multiple so-called modules. Our main modules correspond to the direct subfolders of `stepCalc/lib/`.
 
 Existing/planned modules:
 - `app`: Provides common things for other modules (like brand variables, utility methods, etc.), defines the main application widget & main screen, and combines all other modules via its routing.
 - `auth`: contains sign-in/-out pages and the `AuthService` managing the current user
-- `feed`: retrieves & displays the main content stream
+- `calc`: retrieves & displays the main content stream
 - `favorites`*
 - `explore`*
 - `profile`*
