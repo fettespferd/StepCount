@@ -91,7 +91,7 @@ class _CalculatorState extends State<Calculator>
                 ],
               ),
               CircularPercentIndicator(
-                radius: height / 4,
+                radius: height / 3.5,
                 lineWidth: 15,
                 percent: (completionPercentage(currentSteps, targetSteps)
                         .toDouble()) /
@@ -162,7 +162,7 @@ class _CalculatorState extends State<Calculator>
   Future<void> scheduleNotification(BuildContext context) async {
     final now = tz.TZDateTime.now(local);
     final reminderTime = now;
-    //tz.TZDateTime.local(now.year, now.month, now.day, 22, 39);
+    //tz.TZDateTime.local(now.year, now.month, now.day, 20, 00);
     if (notificationsAllowed) {
       await flutterLocalNotificationsPlugin.zonedSchedule(
           0,
