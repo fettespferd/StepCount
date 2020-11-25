@@ -97,19 +97,18 @@ Future<Widget> selectTargetSteps(int targetSteps, BuildContext context,
                     magnification: 1.5,
                     overAndUnderCenterOpacity: 0.4,
                     itemExtent: 18,
-                    children: _targetStepList(),
+                    children: _targetStepList(context),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text(
                       context.s.stepCalc_saveButton,
                       style: context.textTheme.headline5,
                     ),
                     onPressed: () {
                       cubit.setTargetSteps(selectedTargetSteps);
-
                       context.navigator.pop();
                     },
                   ),
@@ -120,14 +119,14 @@ Future<Widget> selectTargetSteps(int targetSteps, BuildContext context,
 }
 
 //Creates the list for desired target steps that the use can choose from
-List<Widget> _targetStepList() {
+List<Widget> _targetStepList(BuildContext context) {
   final widgetList = <Widget>[];
   final list = [for (var i = 3000; i <= 30000; i += 500) i];
   list.asMap().forEach((key, value) {
     widgetList.add(
       Text(
         '$value',
-        style: TextStyle(color: Colors.orange),
+        style: TextStyle(color: context.theme.primaryColor),
       ),
     );
   });

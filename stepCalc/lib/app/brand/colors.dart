@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   static MaterialColor primary(Brightness brightness) =>
       brightness.isLight ? primaryLight : primaryDark;
-  static const primaryLight = MaterialColor(0xFFD72E8B, {
+  static const primaryLight = MaterialColor(0xFFF7A56C, {
     50: Color(0xFFF7A56C),
     100: Color(0xFFD98A53),
     200: Color(0xFFBB713B),
@@ -17,7 +17,7 @@ class AppColors {
     800: Color(0xFF040000),
     900: Color(0xFF000000),
   });
-  static const primaryDark = MaterialColor(0xFF962061, {
+  static const primaryDark = MaterialColor(0xFFD9691A, {
     50: Color(0xFFD9691A),
     100: Color(0xFFBA4F00),
     200: Color(0xFF9B3600),
@@ -36,7 +36,7 @@ class AppColors {
 
   static MaterialColor secondary(Brightness brightness) =>
       brightness.isLight ? secondaryLight : secondaryLight;
-  static const secondaryLight = MaterialColor(0xFFA32B82, {
+  static const secondaryLight = MaterialColor(0xFFC48F6A, {
     50: Color(0xFFC48F6A),
     100: Color(0xFFA87552),
     200: Color(0xFF8C5D3A),
@@ -48,7 +48,7 @@ class AppColors {
     800: Color(0xFF000000),
     900: Color(0xFF000000),
   });
-  static const secondaryDark = MaterialColor(0xFF711E5A, {
+  static const secondaryDark = MaterialColor(0xFFB09C8F, {
     50: Color(0xFFB09C8F),
     100: Color(0xFF958275),
     200: Color(0xFF7B695D),
@@ -73,7 +73,7 @@ class AppColors {
   static Color background(Brightness brightness) =>
       brightness.isLight ? backgroundLight : backgroundDark;
   static const backgroundLight = Color(0xFFEFEFEF);
-  static const backgroundDark = Color(0xFF121212);
+  static const backgroundDark = Color(0xFF7B695D);
 
   static Color error(Brightness brightness) =>
       brightness.isLight ? errorLight : errorDark;

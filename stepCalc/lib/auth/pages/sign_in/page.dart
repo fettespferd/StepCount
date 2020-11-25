@@ -71,16 +71,16 @@ class _SignInPageState extends State<SignInPage>
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: Text(
-                  'pizzCalc',
+                  'stepCalc',
                   style: TextStyle(
-                    fontFamily: 'FiraSans',
+                    fontFamily: 'Lato',
                     fontSize: 60,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 0,
                   ),
                 )),
-            Spacer(flex: 2),
+            Spacer(flex: 1),
             Padding(
               padding: const EdgeInsets.only(right: 32),
               child: _buildEmailForm(),

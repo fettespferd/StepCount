@@ -79,6 +79,13 @@ flutter:
           weight: 600
         - asset: assets/fonts/FiraSans-Bold.ttf
           weight: 700
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+        - asset: assets/fonts/Lato-Black.ttf
+          weight: 600
+        - asset: assets/fonts/Lato-Bold.ttf
+          weight: 700
 
 flutter_intl:
   enabled: true

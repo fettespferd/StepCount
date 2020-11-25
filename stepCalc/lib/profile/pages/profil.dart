@@ -41,7 +41,7 @@ class _ProfilPageState extends State<ProfilPage>
           context.showBlurryDialog(
             title: context.s.profile_alert_title,
             content: context.s.profile_alert_content,
-            buttonMessage: context.s.profile_alert_content,
+            buttonMessage: context.s.profile_alert_button,
             onButtonPressed: () {
               context.rootNavigator.pop();
             },
