@@ -72,7 +72,7 @@ class _CalculatorState extends State<Calculator>
     return Scaffold(
       appBar: AppBar(
         title: Text(context.s.stepCalc_stepCounter),
-        backgroundColor: Colors.black12,
+        backgroundColor: context.theme.appBarTheme.color,
       ),
       body: LoadingOverlay(
         isLoading: isLoading,
