@@ -19,7 +19,8 @@ class StepCalcApp extends StatelessWidget {
       preference: services.preferences.themeMode,
       builder: (context, themeMode) {
         return MaterialApp(
-          title: 'stepCalc.',
+          title: 'stepCalc',
+          debugShowCheckedModeBanner: false,
           theme: AppTheme.primary(Brightness.light),
           darkTheme: AppTheme.primary(Brightness.dark),
           themeMode: themeMode,

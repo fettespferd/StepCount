@@ -68,6 +68,7 @@ class _CalculatorState extends State<Calculator>
 
   @override
   Widget build(BuildContext context) {
+    final height = context.mediaQuery.size.height;
     final width = context.mediaQuery.size.width;
     return Scaffold(
       appBar: AppBar(
@@ -90,7 +91,7 @@ class _CalculatorState extends State<Calculator>
                 ],
               ),
               CircularPercentIndicator(
-                radius: width / 1.5,
+                radius: height / 4,
                 lineWidth: 15,
                 percent: (completionPercentage(currentSteps, targetSteps)
                         .toDouble()) /
