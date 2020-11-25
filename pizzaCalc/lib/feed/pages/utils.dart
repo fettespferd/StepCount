@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pizzaCalc/settings/preferences.dart';
 import 'cubit.dart';
 
 class BurnedCalorieCalculator {
@@ -56,6 +57,8 @@ Widget notificationButton(bool notificationsAllowed, StepCounter cubit) {
 }
 
 Widget refreshButton(StepCounter cubit, double userWeight, int userHeight) {
+  userWeight = UserPreferences().userWeight;
+  userHeight = UserPreferences().userHeight;
   return IconButton(
     splashColor: Colors.green,
     iconSize: 30,

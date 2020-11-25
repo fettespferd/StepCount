@@ -5,9 +5,7 @@ import 'utils.dart';
 part 'cubit.freezed.dart';
 
 class StepCounter extends Cubit<StepCounterState> {
-  StepCounter() : super(StepCounterState.initial()) {
-    //_setInitialValues();
-  }
+  StepCounter() : super(StepCounterState.initial());
 
   int targetSteps;
   Future<void> _setInitialValues() async {

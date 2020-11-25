@@ -18,14 +18,18 @@ class _CalculatorState extends State<Calculator>
   double userWeight; //in kg
   int userHeight; //in cm
   bool notificationsAllowed;
-
+  int selectedTargetSteps;
+  int currentSteps = 1000;
+  int currentCalories;
+  int totalCalories;
+  bool isLoading = true;
   @override
   void initState() {
     targetSteps = UserPreferences().targetSteps;
     userWeight = UserPreferences().userWeight;
     userHeight = UserPreferences().userHeight;
     notificationsAllowed = UserPreferences().allowNotification;
-
+    cubit.syncData(userWeight, userHeight);
     super.initState();
   }
 
@@ -33,15 +37,6 @@ class _CalculatorState extends State<Calculator>
   StepCounter cubit = StepCounter();
 
   //Step Variables
-
-  int selectedTargetSteps = 4000;
-  int currentSteps = 0;
-  int currentCalories = 0;
-  bool isLoading = false;
-
-  //Size Variables
-
-  int totalCalories = 0;
 
   ScrollPhysics physics = FixedExtentScrollPhysics();
 
@@ -59,6 +54,7 @@ class _CalculatorState extends State<Calculator>
         },
         toggleNotification: () {
           notificationsAllowed = !notificationsAllowed;
+          UserPreferences().allowNotification = notificationsAllowed;
         },
         resynched: (var totalSteps, var totalCalories) {
           isLoading = false;
@@ -78,7 +74,12 @@ class _CalculatorState extends State<Calculator>
     final widgetList = <Widget>[];
     final list = [for (var i = 3000; i <= 30000; i += 500) i];
     list.asMap().forEach((key, value) {
-      widgetList.add(Text('$value'));
+      widgetList.add(
+        Text(
+          '$value',
+          style: TextStyle(color: Colors.orange),
+        ),
+      );
     });
     return widgetList;
   }
@@ -171,7 +172,7 @@ class _CalculatorState extends State<Calculator>
                 children: [
                   counterWidget('$currentSteps / $targetSteps \n    Schritte',
                       'assets/images/steps.png'),
-                  counterWidget('      $currentCalories \nKalorien',
+                  counterWidget('    $currentCalories \nKalorien',
                       'assets/images/flame.png'),
                 ],
               ),
@@ -180,7 +181,9 @@ class _CalculatorState extends State<Calculator>
                 child: Center(
                   child: RaisedButton(
                     color: Colors.orange,
-                    onPressed: _onButtonPressed,
+                    onPressed: () {
+                      _onButtonPressed(targetSteps);
+                    },
                     child: Wrap(
                       children: [
                         Icon(Icons.create, size: 15),
@@ -215,7 +218,7 @@ class _CalculatorState extends State<Calculator>
     );
   }
 
-  Future<Widget> _onButtonPressed() {
+  Future<Widget> _onButtonPressed(int targetSteps) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -234,12 +237,16 @@ class _CalculatorState extends State<Calculator>
                     width: context.mediaQuery.size.width / 2,
                     height: 100,
                     child: ListWheelScrollView(
+                      controller: FixedExtentScrollController(
+                        initialItem: (targetSteps - 3000) ~/ 500,
+                      ),
                       clipBehavior: Clip.hardEdge,
                       physics: physics,
                       onSelectedItemChanged: (i) {
                         selectedTargetSteps = i * 500 + 3000;
                       },
                       diameterRatio: 1,
+                      magnification: 1.5,
                       overAndUnderCenterOpacity: 0.4,
                       itemExtent: 18,
                       children: _targetStepList(),
