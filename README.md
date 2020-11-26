@@ -15,6 +15,8 @@ Get active! Get healthy!
 
 - have a look at the setup of the 'internationalisation' of the app to make sure that the automatic files are generated: [l10n documentation](./Supporting%20Documents/i18n-l10n.md)
 
+- access to the Firebase project for downloading the google-services.json and builing the app is needed and needs to be provided by me: <faubel.julius@gmail.com>
+
 - in `./stepCalc`, run `flutter pub run build_runner build --delete-conflicting-outputs`
 
 - with `flutter run` you can execute the app
