@@ -2,6 +2,8 @@
 
 See the [architecture documentation](./Supporting%20Documents/architecture.md) to get an overview of the code.
 
+<img src="/Supporting Documents/preview.gif" height="600em">
+
 ## Functionality
 
 With this app you can keep track of your daily steps, set your personal goal and also enable a notification that will remind you to talk a walk if you did not reach your goal.
