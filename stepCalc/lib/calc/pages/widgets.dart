@@ -1,65 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:stepCalc/app/module.dart';
+import 'package:stepCalc/calc/pages/cubit.dart';
 
 import 'package:stepCalc/settings/preferences.dart';
 import 'cubit.dart';
 
 //Animated notification Button to enable/disable notifications
-Widget notificationButton(StepCounter cubit) {
-  final notificationsAllowed = UserPreferences().allowNotification;
+class NotificationButton extends StatelessWidget {
+  NotificationButton(this.cubit);
 
-  return AnimatedContainer(
-      duration: Duration(microseconds: 300),
-      height: 30,
-      width: 60,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black45),
-        borderRadius: BorderRadius.circular(20),
-        color: notificationsAllowed
-            ? Colors.greenAccent[100]
-            : Colors.redAccent[100].withOpacity(0.5),
-      ),
-      child: Stack(
-        children: <Widget>[
-          AnimatedPositioned(
-            child: InkWell(
-              onTap: () {
-                cubit.toggleNotification();
-              },
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
-                transitionBuilder: (var child, animation) {
-                  return RotationTransition(child: child, turns: animation);
+  final notificationsAllowed = UserPreferences().allowNotification;
+  final StepCounter cubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+        duration: Duration(microseconds: 300),
+        height: 30,
+        width: 60,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black45),
+          borderRadius: BorderRadius.circular(20),
+          color: notificationsAllowed
+              ? Colors.greenAccent[100]
+              : Colors.redAccent[100].withOpacity(0.5),
+        ),
+        child: Stack(
+          children: <Widget>[
+            AnimatedPositioned(
+              child: InkWell(
+                onTap: () {
+                  cubit.toggleNotification();
                 },
-                child: notificationsAllowed
-                    ? Icon(Icons.notifications,
-                        color: Colors.green, size: 23, key: UniqueKey())
-                    : Icon(Icons.notifications_none,
-                        color: Colors.red, size: 23, key: UniqueKey()),
+                child: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 300),
+                  transitionBuilder: (var child, animation) {
+                    return RotationTransition(child: child, turns: animation);
+                  },
+                  child: notificationsAllowed
+                      ? Icon(Icons.notifications,
+                          color: Colors.green, size: 23, key: UniqueKey())
+                      : Icon(Icons.notifications_none,
+                          color: Colors.red, size: 23, key: UniqueKey()),
+                ),
               ),
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+              top: 3,
+              left: notificationsAllowed ? 25 : 0,
+              right: notificationsAllowed ? 0 : 25,
             ),
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeIn,
-            top: 3,
-            left: notificationsAllowed ? 25 : 0,
-            right: notificationsAllowed ? 0 : 25,
-          ),
-        ],
-      ));
+          ],
+        ));
+  }
 }
 
 //Button to refresh the current Steps provided by the the health packge
-Widget refreshButton(StepCounter cubit, double userWeight, int userHeight) {
-  userWeight = UserPreferences().userWeight;
-  userHeight = UserPreferences().userHeight;
-  return IconButton(
-    splashColor: Colors.green,
-    iconSize: 35,
-    icon: Icon(Icons.refresh),
-    onPressed: () {
-      cubit.syncData(userWeight, userHeight);
-    },
-  );
+
+class RefreshButton extends StatelessWidget {
+  RefreshButton(this.cubit, this.userWeight, this.userHeight);
+  final StepCounter cubit;
+  double userWeight;
+  int userHeight;
+  //userWeight = UserPreferences().userWeight;
+  //userHeight = UserPreferences().userHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      splashColor: Colors.green,
+      iconSize: 35,
+      icon: Icon(Icons.refresh),
+      onPressed: () {
+        cubit.syncData(userWeight, userHeight);
+      },
+    );
+  }
 }
 
 //UI Widget for selecting the target steps
@@ -134,15 +150,21 @@ List<Widget> _targetStepList(BuildContext context) {
 }
 
 //Generic widget to display a text and image
-Widget counterWidget(String text, String image, BuildContext context) {
-  return Column(
-    children: [
-      Image.asset(image),
-      SizedBox(height: 8),
-      Text(
-        text,
-        style: context.textTheme.bodyText2,
-      ),
-    ],
-  );
+class CounterWidget extends StatelessWidget {
+  const CounterWidget(this.text, this.image);
+  final String text;
+  final String image;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image.asset(image),
+        SizedBox(height: 8),
+        Text(
+          text,
+          style: context.textTheme.bodyText2,
+        ),
+      ],
+    );
+  }
 }

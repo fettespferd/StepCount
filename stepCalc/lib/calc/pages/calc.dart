@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stepCalc/app/module.dart';
 import 'package:stepCalc/calc/pages/cubit.dart';
 import 'package:stepCalc/settings/preferences.dart';
-import 'package:timezone/timezone.dart' as tz;
-import '../../main.dart';
+
 import 'utils.dart';
 import 'widgets.dart';
 
@@ -59,7 +58,8 @@ class _CalculatorState extends State<Calculator>
           currentSteps = totalSteps;
           currentCalories = totalCalories;
           if (totalSteps < targetSteps) {
-            scheduleNotification(context);
+            cubit.scheduleNotification(context,
+                notificationsAllowed: notificationsAllowed);
           }
         },
         success: () {},
@@ -86,8 +86,8 @@ class _CalculatorState extends State<Calculator>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  refreshButton(cubit, userWeight, userHeight),
-                  notificationButton(cubit)
+                  RefreshButton(cubit, userWeight, userHeight),
+                  NotificationButton(cubit)
                 ],
               ),
               CircularPercentIndicator(
@@ -107,14 +107,12 @@ class _CalculatorState extends State<Calculator>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  counterWidget(
+                  CounterWidget(
                       '$currentSteps / $targetSteps \n    ${context.s.stepCalc_steps}',
-                      'assets/images/steps.png',
-                      context),
-                  counterWidget(
+                      'assets/images/steps.png'),
+                  CounterWidget(
                       '    $currentCalories \n${context.s.stepCalc_calories}',
-                      'assets/images/flame.png',
-                      context),
+                      'assets/images/flame.png'),
                 ],
               ),
               Padding(
@@ -157,24 +155,5 @@ class _CalculatorState extends State<Calculator>
         ),
       ),
     );
-  }
-
-  Future<void> scheduleNotification(BuildContext context) async {
-    final now = tz.TZDateTime.now(local);
-    final reminderTime = now;
-    //tz.TZDateTime.local(now.year, now.month, now.day, 20, 00);
-    if (notificationsAllowed) {
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-          0,
-          context.s.stepCalc_goalmissed,
-          context.s.stepCalc_motivation,
-          reminderTime.add(const Duration(seconds: 5)),
-          const NotificationDetails(
-              android: AndroidNotificationDetails(
-                  'channel ID', 'stepCalc', 'Calc Steps per day')),
-          androidAllowWhileIdle: true,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime);
-    }
   }
 }

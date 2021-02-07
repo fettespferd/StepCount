@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:stepCalc/app/module.dart';
 import 'package:stepCalc/settings/preferences.dart';
 import 'utils.dart';
-
+import 'package:timezone/timezone.dart' as tz;
+import '../../main.dart';
 part 'cubit.freezed.dart';
 
 class StepCounter extends Cubit<StepCounterState> {
@@ -49,6 +51,26 @@ class StepCounter extends Cubit<StepCounterState> {
     final totalCalories = calcCalories(weight, height, totalSteps);
 
     emit(StepCounterState.resynched(totalSteps, totalCalories));
+  }
+
+  Future<void> scheduleNotification(BuildContext context,
+      {bool notificationsAllowed}) async {
+    final now = tz.TZDateTime.now(local);
+    final reminderTime = now;
+    //tz.TZDateTime.local(now.year, now.month, now.day, 20, 00);
+    if (notificationsAllowed) {
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+          0,
+          context.s.stepCalc_goalmissed,
+          context.s.stepCalc_motivation,
+          reminderTime.add(const Duration(seconds: 5)),
+          const NotificationDetails(
+              android: AndroidNotificationDetails(
+                  'channel ID', 'stepCalc', 'Calc Steps per day')),
+          androidAllowWhileIdle: true,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime);
+    }
   }
 }
 
